@@ -1,3 +1,6 @@
+/*
+* variables
+*/
 var options = [
 	'single'
 	, 'mirror2'
@@ -5,12 +8,19 @@ var options = [
 	, 'dot_symetrie'
 ]
 
+var opened_menu = false;
 
+var default_back_color="#040812";
+var default_brush_color="#D6F5F2";
+
+/*
+* Fonctions
+*/
 function init(){
 	var can = document.getElementById('drawing_zone');
 	var ctx=can.getContext("2d");
 	putSize(can);
-	addEvents(can)
+	addEvents(can);
 }
 
 function putSize(can){
@@ -54,6 +64,18 @@ function drawMirror2(can,t,e){
 
 }
 
+function toggleMenu(){
+	var droppedMenu = document.getElementById('menu_overlay');
+	if(opened_menu){
+		droppedMenu.style.display='none';
+		opened_menu=false;
+	}else{
+		droppedMenu.style.display='block';
+		opened_menu=true;
+	}
+		
+	}
+
 
 /**
 * EVENTS
@@ -64,37 +86,63 @@ var lastx,lasty;
 var lastmx,lastmy;
 function addEvents(can){
 	var context=can.getContext('2d');
-	context.strokeStyle = "hsl("+Math.floor(Math.random()*45+173)+", "+Math.floor(Math.random()*10+56)+"%, "+Math.floor(Math.random()*20+80)+"%)";
-	var t=1;
+	var t=0;
+
+	//affichage au resize de la fenêtre
 	window.addEventListener('resize', function(){
 		putSize(can);
 	}
 	, true);
 
-	window.addEventListener('mousedown', function(){
-		document.getElementById('indic_draw').style.display='none'
-	}
-	, true);
-
+	//Quand on clique sans relever une première fois
 	can.addEventListener('mousedown', function(e){
+		//Affichage
+		if(opened_menu) toggleMenu();
+		document.getElementById('indic_draw').style.display='none'
+
+		// paramètres pour dessiner
 		mouse = 1;
-		t=1;
 		lastx = e.x;
 		lasty = e.y;
 		lastmx = e.x;
 		lastmy = e.y;
 	},true);
 
+	//Quand on arrête de cliquer
 	window.addEventListener('mouseup', function(e){
 		mouse = 0;
 	},true);
 
-	var t=0;
+	// Quand on dessine
 	can.addEventListener('mousemove', function(e){
 		if(e.isTrusted && mouse == 1){
+			context.strokeStyle = default_brush_color;
 			drawSingle(can,t,e)
 			t+=0.3;
 		}
+	}
+	, true);
+
+	// ouvrir et fermer le menu du côté
+	var dropdownButton = document.getElementById('dropdown_menu');
+	dropdownButton.addEventListener('click', function(){
+		toggleMenu();
+	}
+	, true);
+
+	// Changement de couleur
+	//background-color
+	var back_colorpicker = document.getElementById('background-color');
+	back_colorpicker.addEventListener('change', function(){
+		default_back_color = back_colorpicker.value
+		can.style.backgroundColor=default_back_color
+	}
+	, true);
+
+	//brush-color
+	var brush_colorpicker = document.getElementById('brush-color');
+	brush_colorpicker.addEventListener('change', function(){
+		default_brush_color = brush_colorpicker.value;
 	}
 	, true);
 }
@@ -103,10 +151,9 @@ function addEvents(can){
 /*
 
 AJOUTER FEATURES
-	choisir couleur
-	miroir et point de symétrie
-	choisir couleur arrière plan
-	tester mobile <3
+	choisir couleur 	pinceau
+						background
+	miroir ou point de symétrie
 */
 
 //<div>Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>

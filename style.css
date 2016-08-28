@@ -17,3 +17,23 @@ body{
 	margin-left:-50px;
 	margin-top:-50px;
 }
+
+#dropdown_menu{
+	position:absolute;
+	top:10px;
+	right:10px;
+}
+
+#menu_overlay{
+	display:none;
+	position:absolute;
+	top:52px;
+	right:0px;
+	background-color:white; 
+	text-align: right
+}
+
+.menu_label{
+	margin:10px;
+	display: block;
+}
