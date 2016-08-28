@@ -32,7 +32,6 @@ function drawSingle(can,t,e){
 	context.beginPath();
 	context.moveTo(lastmx, lastmy);
 	context.lineTo(Math.cos(e.x*Math.PI*2+t)*gap+e.x, Math.sin(e.y*Math.PI*2+t)*gap+e.y);
-	//context.lineTo(e.x, e.y);
 	context.stroke();
 
 	lastmx = Math.cos(e.x*Math.PI*2+t)*gap+e.x;
@@ -72,6 +71,11 @@ function addEvents(can){
 	}
 	, true);
 
+	window.addEventListener('mousedown', function(){
+		document.getElementById('indic_draw').style.display='none'
+	}
+	, true);
+
 	can.addEventListener('mousedown', function(e){
 		mouse = 1;
 		t=1;
@@ -104,3 +108,5 @@ AJOUTER FEATURES
 	choisir couleur arrière plan
 	tester mobile <3
 */
+
+//<div>Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
