@@ -1,0 +1,10 @@
+body{
+	margin:0;
+	padding:0;
+}
+
+#drawing_zone{
+	background-color:#040812;
+	position:absolute;
+	top:0;
+}
